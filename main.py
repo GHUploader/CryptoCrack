@@ -31,6 +31,27 @@ ID_COORDBTN = 200
 # Globals END
 # ########################
 
+'''
+Purpose - Checks if the given string contains the valid characters specified by the given range.
+
+param str - The string to validate
+param startAscii - The value specifying the lower bound of the valid character range.
+param endAscii - The value specifying the upper bound of the valid character range.
+
+Note: The values specifying the valid range of characters are ASCII values
+
+'''
+
+def validateStr(str, startAscii, endAscii):
+    index = 0
+    size = str.__len__()
+    while index < size:
+        char = str[index]
+        iChar = ord(char)
+        if not startAscii <= iChar <= endAscii:
+            return False
+        index += 1
+    return True
 
 
 # wndProc gets calles by the OS every single time the windows is repainted. All drawing must be done below WM_PAINT.
@@ -43,6 +64,8 @@ def wndProc(hwnd, uMsg, wParam, lParam):
     global hWndInputY
     global hWndCoordBtn
     global hFont
+    global xCoord
+    global yCoord
 
     if uMsg == con.WM_CREATE:                   # Python buf: WM_CREATE never gets called, use sendmessage
         hInstance = UI.GetWindowLong(hwnd, con.GWL_HINSTANCE)
@@ -72,6 +95,7 @@ def wndProc(hwnd, uMsg, wParam, lParam):
 
         return 0
     elif uMsg == con.WM_PAINT:
+
         hDC, paintStruct = UI.BeginPaint(hwnd)  # returns handle to the device context and the paint structure
 
         if not windowCreated:
@@ -88,14 +112,23 @@ def wndProc(hwnd, uMsg, wParam, lParam):
 
         UI.SelectObject(hDC, oldHPB)
 
-        UI.EndPaint(hwnd, paintStruct)                  # resources must be released when painting is done
+        UI.EndPaint(hwnd, paintStruct)  # resources must be released when painting is done
 
         if not windowCreated:
             UI.SendMessage(hwnd, con.WM_CREATE, 0, 0)
             windowCreated = True
 
         return 0
+
     elif uMsg == con.WM_COMMAND:
+        if UI.LOWORD(wParam) == ID_COORDBTN:
+            xCStr = UI.GetWindowText(hWndInputX)
+            yCStr = UI.GetWindowText(hWndInputY)
+            if xCStr and yCStr and validateStr(xCStr, 48, 57) and validateStr(yCStr, 48, 57):
+                xCoord = int(xCStr)
+                yCoord = int(yCStr)
+                rect = UI.GetClientRect(hwnd)
+                UI.RedrawWindow(hwnd, rect, 0, con.RDW_INVALIDATE | con.RDW_INTERNALPAINT)
 
         return 0
     else:
