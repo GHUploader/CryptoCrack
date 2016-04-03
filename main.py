@@ -21,6 +21,9 @@ hWndInputY = 0
 hWndCoordBtn = 0
 hFont = 0
 
+xCoord = 100
+yCoord = 100
+
 ID_XCINPUT = 100
 ID_YCINPUT = 101
 ID_COORDBTN = 200
@@ -49,6 +52,7 @@ def wndProc(hwnd, uMsg, wParam, lParam):
         UI.SendMessage(hWndCoordBtn, con.WM_SETFONT, hFont, True)
         UI.SendMessage(hWndInputX, con.WM_SETFONT, hFont, True)
         UI.SendMessage(hWndInputY, con.WM_SETFONT, hFont, True)
+        UI.SetWindowPos(hwnd, 0, 0, 0, 1000, 575, con.SWP_NOMOVE | con.SWP_NOZORDER)
         return 0
     elif uMsg == con.WM_CLOSE:
         UI.DestroyWindow(hwnd)
@@ -78,8 +82,11 @@ def wndProc(hwnd, uMsg, wParam, lParam):
             UI.PostQuitMessage(0)
             raise SystemError("Failed to load bmp")
 
-        UI.MoveToEx(hDC, 10, 10)
-        UI.LineTo(hDC, 100, 100)
+        oldHPB = UI.SelectObject(hDC, UI.GetStockObject(con.BLACK_BRUSH))
+
+        win.drawCircle(hDC, xCoord, yCoord, 20)
+
+        UI.SelectObject(hDC, oldHPB)
 
         UI.EndPaint(hwnd, paintStruct)                  # resources must be released when painting is done
 
@@ -88,10 +95,7 @@ def wndProc(hwnd, uMsg, wParam, lParam):
             windowCreated = True
 
         return 0
-    elif uMsg == con.WM_FONTCHANGE:
-
-        return 0
-    elif uMsg == con.WM_SETFOCUS:
+    elif uMsg == con.WM_COMMAND:
 
         return 0
     else:

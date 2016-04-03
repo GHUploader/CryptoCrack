@@ -39,8 +39,8 @@ def loadBMPIntoDC(hDC, hbmp, x, y):
     memDC = UI.CreateCompatibleDC(hDC)
     if not memDC:
         return False
-
-    if not UI.SelectObject(memDC, hbmp):
+    oldHBmp = UI.SelectObject(memDC, hbmp)
+    if not oldHBmp:
         UI.DeleteDC(memDC)
         return False
 
@@ -49,8 +49,17 @@ def loadBMPIntoDC(hDC, hbmp, x, y):
         UI.DeleteDC(memDC)
         return False
 
+    UI.SelectObject(memDC, oldHBmp)
     UI.DeleteDC(memDC)
     return True
+
+def drawCircle(hdc, x, y, diam):
+    radius = int(diam / 2)
+    tlX = x - radius
+    tlY = y - radius
+    brX = x + radius
+    brY = y + radius
+    UI.Ellipse(hdc, tlX, tlY, brX, brY)
 
 def createInputBox(x, y, width, height, id, hWnd, hInstance):
     return UI.CreateWindow("EDIT", None, con.WS_CHILD | con.WS_BORDER | con.WS_VISIBLE | con.ES_LEFT | con.ES_MULTILINE, x, y, width, height, hWnd, id, hInstance, None)
