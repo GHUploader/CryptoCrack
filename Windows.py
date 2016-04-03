@@ -12,14 +12,10 @@ import File as file
 import sys
 
 # Globals
-global hBmp
-global windowCreated
-global hWnd             # win32 complications...
 
 
-hBmp = 0
-windowCreated = False
-hWnd = 0
+
+
 
 # Globals END
 
@@ -56,64 +52,41 @@ def loadBMPIntoDC(hDC, hbmp, x, y):
     UI.DeleteDC(memDC)
     return True
 
+def createInputBox(x, y, width, height, id, hWnd, hInstance):
+    return UI.CreateWindow("EDIT", None, con.WS_CHILD | con.WS_BORDER | con.WS_VISIBLE | con.ES_LEFT | con.ES_MULTILINE, x, y, width, height, hWnd, id, hInstance, None)
 
+def createButton(text, x, y, width, height, id, hWnd, hInstance):
+    return UI.CreateWindow("BUTTON", text, con.WS_CHILD | con.WS_VISIBLE | con.BS_FLAT | con.BS_CENTER | con.BS_PUSHBUTTON, x, y, width, height, hWnd, id, hInstance, None)
 
-# wndProc gets calles by the OS every single time the windows is repainted. All drawing must be done below WM_PAINT.
-# painting has to be done fast so that the window doesn't stop responding, or lag
+def createFont(fontSize, pPerInch, weight, isItalic, isUnderlined, isCrossedOut):
+    logFont = UI.LOGFONT()
+    logFont.lfHeight = -((fontSize * pPerInch) / 72)
+    logFont.lfWidth = 0
+    logFont.lfEscapement = 0
+    logFont.lfOrientation = 0
+    logFont.lfWeight = weight
+    logFont.lfItalic = isItalic
+    logFont.lfUnderline = isUnderlined
+    logFont.lfStrikeOut = isCrossedOut
+    logFont.lfCharSet = con.ANSI_CHARSET
+    logFont.lfOutPrecision = con.OUT_DEFAULT_PRECIS
+    logFont.lfClipPrecision = con.CLIP_DEFAULT_PRECIS
+    logFont.lfQuality = con.DEFAULT_QUALITY
+    logFont.lfPitchAndFamily = con.DEFAULT_PITCH | con.FF_DONTCARE
+    logFont.lfFaceName = ""
 
-def wndProc(hwnd, uMsg, wParam, lParam):
-    global hBmp
-    global windowCreated
-    global hWnd
-
-    if uMsg == con.WM_CREATE:                   # Python buf: WM_CREATE never gets called, use sendmessage
-        #hWnd = hwnd
-        hDC, paintStruct = UI.BeginPaint(hwnd)
-
-        UI.EndPaint(hwnd, paintStruct)
-        return 0
-    elif uMsg == con.WM_CLOSE:
-        UI.DestroyWindow(hwnd)                          # here you could prompt the user if they really want to exit or something
-        return 0
-    elif uMsg == con.WM_DESTROY:                        # trigerred when DestroyWindow is called
-        UI.PostQuitMessage(0)                           # If this is omitted, the program won't close after the window closes
-
-        return 0
-    elif uMsg == con.WM_QUIT:                           # triggered when PostQuitMessage is called, but it's not called as it's supposed to...
-        #closeHandles()
-        return 0
-    elif uMsg == con.WM_SIZE:                           # recompute the sizes of each component to be painted. This event is called when the window is resized
-        return 0
-    elif uMsg == con.WM_PAINT:
-        hDC, paintStruct = UI.BeginPaint(hwnd)  # returns handle to the device context and the paint structure
-
-        if not windowCreated:
-            hBmp = loadImgBMP(hDC, "grass.bmp")
-            windowCreated = True
-
-
-        if not loadBMPIntoDC(hDC, hBmp, 0, 0):
-            UI.PostQuitMessage(0)
-            raise SystemError("Failed to load bmp")
-
-        UI.MoveToEx(hDC, 10, 10)
-        UI.LineTo(hDC, 100, 100)
-
-        UI.EndPaint(hwnd, paintStruct)                  # resources must be released when painting is done
-        return 0
-    else:
-        return UI.DefWindowProc(hwnd, uMsg, wParam, lParam)     # if msg handler is not defined, then do nothing
-
-# end of function
+    hFont = UI.CreateFontIndirect(logFont)
+    return hFont
 
 # wndclass - Initializes and stores all of the information regarding the WNDCLASS data structure and
 # maneges the creation of a window.
 
 class WNDClass:
 
-    def __init__(self):                                                         # constructor definition
+    def __init__(self, wndProc):                                                         # constructor definition
         self.className = "WNDClass"
         self.hInstance = UI.GetModuleHandle(None)                               # get handle to the current instance of the program from the OS
+        self.dwStyle = con.WS_OVERLAPPEDWINDOW
 
         self.wndClass = UI.WNDCLASS()                                           # call constructor ( does nothing in this case )
         self.wndClass.style = con.CS_VREDRAW | con.CS_HREDRAW                   # styles...
@@ -127,10 +100,13 @@ class WNDClass:
         self.wndClassAtom = UI.RegisterClass(self.wndClass)                     # register class.
 
 
-
+    def setResizable(self, isResizable):
+        if not isResizable:
+            self.dwStyle ^= con.WS_THICKFRAME
+            self.dwStyle ^= con.WS_MAXIMIZEBOX
 
     def createWindow(self, title):
-        self.hwnd = UI.CreateWindow(self.wndClassAtom, title, con.WS_OVERLAPPEDWINDOW, con.CW_USEDEFAULT,
+        self.hwnd = UI.CreateWindow(self.wndClassAtom, title, self.dwStyle, con.CW_USEDEFAULT,
                                     con.CW_USEDEFAULT, con.CW_USEDEFAULT, con.CW_USEDEFAULT, 0, 0, self.hInstance, None)
 
         # 4 - 7th parameter:
