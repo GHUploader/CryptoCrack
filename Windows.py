@@ -53,6 +53,11 @@ def loadBMPIntoDC(hDC, hbmp, x, y):
     UI.DeleteDC(memDC)
     return True
 
+def getBmpDimensions(hbmp):
+    bm = UI.GetObject(hbmp)
+    ret = [bm.bmWidth, bm.bmHeight]
+    return ret
+
 def drawCircle(hdc, x, y, diam):
     radius = int(diam / 2)
     tlX = x - radius
@@ -64,12 +69,18 @@ def drawCircle(hdc, x, y, diam):
 def createInputBox(x, y, width, height, id, hWnd, hInstance):
     return UI.CreateWindow("EDIT", None, con.WS_CHILD | con.WS_BORDER | con.WS_VISIBLE | con.ES_LEFT | con.ES_MULTILINE, x, y, width, height, hWnd, id, hInstance, None)
 
+def createOutputBox(x, y, width, height, id, hWnd, hInstance):
+    hOWnd = createInputBox(x, y, width, height, id, hWnd, hInstance)
+    hWWndStyles = UI.GetWindowLong(hOWnd, con.GWL_STYLE)
+    UI.SetWindowLong(hOWnd, con.GWL_STYLE, hWWndStyles | con.WS_DISABLED)
+    return hOWnd
+
 def createButton(text, x, y, width, height, id, hWnd, hInstance):
     return UI.CreateWindow("BUTTON", text, con.WS_CHILD | con.WS_VISIBLE | con.BS_FLAT | con.BS_CENTER | con.BS_PUSHBUTTON, x, y, width, height, hWnd, id, hInstance, None)
 
-def createFont(fontSize, pPerInch, weight, isItalic, isUnderlined, isCrossedOut):
+def createFont(fontSize, pPerInchY, weight, isItalic, isUnderlined, isCrossedOut):
     logFont = UI.LOGFONT()
-    logFont.lfHeight = -((fontSize * pPerInch) / 72)
+    logFont.lfHeight = -((fontSize * pPerInchY) / 72)
     logFont.lfWidth = 0
     logFont.lfEscapement = 0
     logFont.lfOrientation = 0
@@ -94,25 +105,24 @@ class WNDClass:
 
     def __init__(self, wndProc):                                                         # constructor definition
         self.className = "WNDClass"
-        self.hInstance = UI.GetModuleHandle(None)                               # get handle to the current instance of the program from the OS
+        self.hInstance = UI.GetModuleHandle(None)
         self.dwStyle = con.WS_OVERLAPPEDWINDOW
 
-        self.wndClass = UI.WNDCLASS()                                           # call constructor ( does nothing in this case )
-        self.wndClass.style = con.CS_VREDRAW | con.CS_HREDRAW                   # styles...
-        self.wndClass.lpfnWndProc = wndProc                                     # set the wnd procedure
-        self.wndClass.hInstance = self.hInstance                                # handle to the current instance
+        self.wndClass = UI.WNDCLASS()
+        self.wndClass.style = con.CS_VREDRAW | con.CS_HREDRAW
+        self.wndClass.hInstance = self.hInstance
+        self.wndClass.lpfnWndProc = wndProc
         self.wndClass.hIcon = UI.LoadIcon(0, con.IDI_APPLICATION)               # Default application icon
         self.wndClass.hCursor = UI.LoadCursor(0, con.IDC_ARROW)                 # normal mose pointer as cursor
         self.wndClass.hbrBackground = UI.GetStockObject(con.WHITE_BRUSH)        # white background brush
-        self.wndClass.lpszClassName = self.className
+        self.wndClass.lpszClassName = self.className                            # class name doesn't work in python...
 
-        self.wndClassAtom = UI.RegisterClass(self.wndClass)                     # register class.
+        self.wndClassAtom = UI.RegisterClass(self.wndClass)                     # ...so the ATOM must be used
 
 
     def setResizable(self, isResizable):
         if not isResizable:
-            self.dwStyle ^= con.WS_THICKFRAME
-            self.dwStyle ^= con.WS_MAXIMIZEBOX
+            self.dwStyle ^= con.WS_THICKFRAME | con.WS_MAXIMIZEBOX
 
     def createWindow(self, title):
         self.hwnd = UI.CreateWindow(self.wndClassAtom, title, self.dwStyle, con.CW_USEDEFAULT,
@@ -123,10 +133,6 @@ class WNDClass:
 
         UI.ShowWindow(self.hwnd, con.SW_SHOWNORMAL)           # send the first WM_PAIN msg
         UI.UpdateWindow(self.hwnd)
-
-        # global hWnd
-        # self.hwnd = hWnd
-
 
 
     def start(self):
