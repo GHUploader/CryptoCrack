@@ -70,6 +70,16 @@ def validateStr(str, startAscii, endAscii):
         index += 1
     return True
 
+
+'''
+Description - Takes in a string and adds the specified offset to every character in the string.
+
+param word - A string containing the characters to be encrypted. An array is also acceptable.
+param offset - The value to be added to every single character.
+
+
+'''
+
 def encryptStr(word, offset):
     index = 0
     size = word.__len__()
