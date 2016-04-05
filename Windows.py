@@ -4,6 +4,8 @@ import win32gui as UI
 import win32 as WIN
 import win32con as con
 import win32file as WF
+import win32ui as U
+import win32com as COM
 import winerror
 from ctypes import *
 from ctypes.wintypes import *

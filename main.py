@@ -1,5 +1,6 @@
 
 import Windows as win
+import GroupedWindows as GW
 import File as f
 import Crypto as cpt
 import win32con as con
@@ -21,6 +22,8 @@ hWndInputY = 0
 hWndCoordBtn = 0
 hWndCryptoOutput = 0
 hFont = 0
+
+inputGroup = None
 
 xCoord = 0
 yCoord = 0
@@ -90,11 +93,20 @@ def createWindowComponents(hwnd):
     global hWndInputY
     global hWndCoordBtn
     global hWndCryptoOutput
+    global inputGroup
+    groupYOffset = 20
+    xInC = 10
     hInstance = UI.GetWindowLong(hwnd, con.GWL_HINSTANCE)
     hWndInputX = win.createInputBox(0, 500, 100, 20, ID_XCINPUT, hwnd, hInstance)
     hWndInputY = win.createInputBox(120, 500, 100, 20, ID_YCINPUT, hwnd, hInstance)
     hWndCoordBtn = win.createButton("Move", 240, 500, 100, 22, ID_COORDBTN, hwnd, hInstance)
     hWndCryptoOutput = win.createOutputBox(650, 10, 325, 515, 0, hwnd, hInstance)
+    inputGroup = GW.GroupedWindows(hwnd, 10, 480, 360, 50)
+    inputGroup.setTitleText("Input")
+    inputGroup.addChild(hWndInputX, xInC, groupYOffset)
+    inputGroup.addChild(hWndInputY, xInC + 120, groupYOffset)
+    inputGroup.addChild(hWndCoordBtn, xInC + 240, groupYOffset)
+    inputGroup.setBrush(0x00ffffff)
 
 def initWindow(hwnd):
     initGDI(hwnd)
@@ -125,6 +137,7 @@ def cleanUp():
     UI.DestroyWindow(hWndInputX)
     UI.DestroyWindow(hWndInputY)
     UI.DestroyWindow(hWndCoordBtn)
+    inputGroup.destroyWindow()
     UI.DeleteObject(hFont)
     UI.DeleteObject(hBmp)
 
@@ -143,6 +156,7 @@ def setFont():
     UI.SendMessage(hWndCoordBtn, con.WM_SETFONT, hFont, True)
     UI.SendMessage(hWndInputX, con.WM_SETFONT, hFont, True)
     UI.SendMessage(hWndInputY, con.WM_SETFONT, hFont, True)
+    inputGroup.setFont(hFont)
     UI.SendMessage(hWndCryptoOutput, con.WM_SETFONT, hFont, True)
 
 def processMovBtnClick(hwnd):
@@ -207,7 +221,6 @@ def wndProc(hwnd, uMsg, wParam, lParam):
         if not windowCreated:
             UI.SendMessage(hwnd, con.WM_CREATE, 0, 0)  # This must be done once manually, since there is a bug PyWin32
             windowCreated = True
-            return 0
 
         hDC, paintStruct = UI.BeginPaint(hwnd)  # returns handle to the device context and the paint structure
 

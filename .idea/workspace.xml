@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="532e483b-f4aa-4a17-8c44-6f0b3927def2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Crypto.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Point.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/GroupedWindows.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/CryptoCrack.iml" afterPath="$PROJECT_DIR$/.idea/CryptoCrack.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Windows.py" afterPath="$PROJECT_DIR$/Windows.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
@@ -27,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3835">
-              <caret line="262" column="0" selection-start-line="262" selection-start-column="0" selection-end-line="262" selection-end-column="0" />
+            <state relative-caret-position="289">
+              <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
               <folding>
                 <element signature="e#1#22#0" expanded="true" />
               </folding>
@@ -39,11 +40,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Windows.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GroupedWindows.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GroupedWindows.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
+              <folding>
+                <element signature="e#1#22#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Windows.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Windows.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+            <state relative-caret-position="289">
+              <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
               <folding>
                 <element signature="e#1#23#0" expanded="true" />
               </folding>
@@ -54,10 +67,20 @@
       <file leaf-file-name="Crypto.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Crypto.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="94" column="40" selection-start-line="94" selection-start-column="40" selection-end-line="94" selection-end-column="40" />
+            <state relative-caret-position="1581">
+              <caret line="104" column="40" selection-start-line="104" selection-start-column="40" selection-end-line="104" selection-end-column="40" />
               <folding>
-                <element signature="e#1#19#0" expanded="true" />
+                <marker date="1459831941017" expanded="true" signature="1:33" placeholder="import ..." />
+                <marker date="1459831941017" expanded="true" signature="34:288" placeholder="'''...'''" />
+                <marker date="1459831941017" expanded="true" signature="325:747" placeholder="..." />
+                <marker date="1459831941017" expanded="true" signature="454:729" placeholder="..." />
+                <marker date="1459831941017" expanded="true" signature="749:822" placeholder="'''...'''" />
+                <marker date="1459831941017" expanded="true" signature="848:1024" placeholder="..." />
+                <marker date="1459831941017" expanded="true" signature="927:1009" placeholder="..." />
+                <marker date="1459831941017" expanded="true" signature="1053:1169" placeholder="..." />
+                <marker date="1459831941017" expanded="true" signature="1171:1678" placeholder="'''...'''" />
+                <marker date="1459831941017" expanded="true" signature="1723:1946" placeholder="..." />
+                <marker date="1459831941017" expanded="true" signature="1786:1930" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -76,7 +99,7 @@
       <file leaf-file-name="File.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/File.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
+            <state relative-caret-position="731">
               <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
               <folding>
                 <element signature="e#1#23#0" expanded="true" />
@@ -102,9 +125,10 @@
       <list>
         <option value="$PROJECT_DIR$/WFile.py" />
         <option value="$PROJECT_DIR$/File.py" />
-        <option value="$PROJECT_DIR$/Windows.py" />
         <option value="$PROJECT_DIR$/Point.py" />
         <option value="$PROJECT_DIR$/Crypto.py" />
+        <option value="$PROJECT_DIR$/Windows.py" />
+        <option value="$PROJECT_DIR$/GroupedWindows.py" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
@@ -140,7 +164,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -161,7 +185,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -431,6 +455,64 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4335">
+          <caret line="262" column="0" selection-start-line="262" selection-start-column="0" selection-end-line="262" selection-end-column="0" />
+          <folding>
+            <element signature="e#1#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Windows.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#1#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Crypto.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1581">
+          <caret line="94" column="40" selection-start-line="94" selection-start-column="40" selection-end-line="94" selection-end-column="40" />
+          <folding>
+            <marker date="1459831941017" expanded="true" signature="1:33" placeholder="import ..." />
+            <marker date="1459831941017" expanded="true" signature="34:288" placeholder="'''...'''" />
+            <marker date="1459831941017" expanded="true" signature="325:747" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="454:729" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="749:822" placeholder="'''...'''" />
+            <marker date="1459831941017" expanded="true" signature="848:1024" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="927:1009" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="1053:1169" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="1171:1678" placeholder="'''...'''" />
+            <marker date="1459831941017" expanded="true" signature="1723:1946" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="1786:1930" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Point.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/File.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding>
+            <element signature="e#1#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -705,7 +787,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
           <caret line="194" column="17" selection-start-line="194" selection-start-column="17" selection-end-line="194" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -713,7 +794,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
           <caret line="936" column="0" selection-start-line="936" selection-start-column="0" selection-end-line="936" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -721,26 +801,25 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3835">
-          <caret line="262" column="0" selection-start-line="262" selection-start-column="0" selection-end-line="262" selection-end-column="0" />
-          <folding>
-            <element signature="e#1#22#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Crypto.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="94" column="40" selection-start-line="94" selection-start-column="40" selection-end-line="94" selection-end-column="40" />
+        <state relative-caret-position="1581">
+          <caret line="104" column="40" selection-start-line="104" selection-start-column="40" selection-end-line="104" selection-end-column="40" />
           <folding>
-            <element signature="e#1#19#0" expanded="true" />
+            <marker date="1459831941017" expanded="true" signature="1:33" placeholder="import ..." />
+            <marker date="1459831941017" expanded="true" signature="34:288" placeholder="'''...'''" />
+            <marker date="1459831941017" expanded="true" signature="325:747" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="454:729" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="749:822" placeholder="'''...'''" />
+            <marker date="1459831941017" expanded="true" signature="848:1024" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="927:1009" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="1053:1169" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="1171:1678" placeholder="'''...'''" />
+            <marker date="1459831941017" expanded="true" signature="1723:1946" placeholder="..." />
+            <marker date="1459831941017" expanded="true" signature="1786:1930" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -755,7 +834,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/File.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
+        <state relative-caret-position="731">
           <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
           <folding>
             <element signature="e#1#23#0" expanded="true" />
@@ -765,10 +844,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Windows.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="31" column="23" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
+        <state relative-caret-position="289">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding>
             <element signature="e#1#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GroupedWindows.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="34" selection-start-line="13" selection-start-column="34" selection-end-line="13" selection-end-column="34" />
+          <folding>
+            <element signature="e#1#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="108" column="28" selection-start-line="108" selection-start-column="28" selection-end-line="108" selection-end-column="28" />
+          <folding>
+            <element signature="e#1#22#0" expanded="true" />
           </folding>
         </state>
       </provider>
