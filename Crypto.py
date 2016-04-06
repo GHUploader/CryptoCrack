@@ -4,8 +4,8 @@ import random
 '''
 
 
-param rect - Standard win32 RECT structure: (left, top, right, bottom)
-param secCount - Number of sections to split up the field in. This value will equal to the number of points generated,
+:param rect - Standard win32 RECT structure: (left, top, right, bottom)
+:param secCount - Number of sections to split up the field in. This value will equal to the number of points generated,
     and will also determine the density of the points.
 '''
 
@@ -48,9 +48,9 @@ def strArrToString(strArr):
 '''
 Purpose - Checks if the given string contains the valid characters specified by the given range.
 
-param str - The string to validate
-param startAscii - The value specifying the lower bound of the valid character range.
-param endAscii - The value specifying the upper bound of the valid character range.
+:param str - The string to validate
+:param startAscii - The value specifying the lower bound of the valid character range.
+:param endAscii - The value specifying the upper bound of the valid character range.
 
 Return Value:
     Returns False if the string contains a value outside of the specified range, otherwise returns True.
@@ -74,10 +74,10 @@ def validateStr(str, startAscii, endAscii):
 '''
 Description - Takes in a string and adds the specified offset to every character in the string.
 
-param word - A string containing the characters to be encrypted. An array is also acceptable.
-param offset - The value to be added to every single character.
+:param word - A string containing the characters to be encrypted. An array is also acceptable.
+:param offset - The value to be added to every single character.
 
-
+:returns - Array of the encrypted character codes.
 '''
 
 def encryptStr(word, offset):
@@ -98,9 +98,11 @@ def encryptWord(word):
     offset = random.randint(1, 20)
     return encryptStr(word, offset)
 
-def encryptWords(strArr):
+def encryptWords(strArr, space=False):
     ret = []
     offset = random.randint(1, 20)
     for i in range(0, strArr.__len__(), 1):
         ret += encryptStr(strArr[i], offset)
+        if space:
+            ret.append('  ')
     return ret

@@ -22,6 +22,7 @@ hWndInputY = 0
 hWndCoordBtn = 0
 hWndCryptoOutput = 0
 hFont = 0
+# hWnd = None
 
 inputGroup = None
 
@@ -47,6 +48,7 @@ ASCII_DEC_END = 57
 coords = []
 encrypted = []
 encryptedMsg = ""
+pairsDone = 1
 
 # Globals END
 # ########################
@@ -54,6 +56,10 @@ encryptedMsg = ""
 
 # ########################################
 # WndProc Handler Sub-Procedures
+
+def redrawWindow(hwnd):
+    rect = UI.GetClientRect(hwnd)
+    UI.RedrawWindow(hwnd, rect, 0, con.RDW_INVALIDATE | con.RDW_INTERNALPAINT)
 
 def validateBtnInput(xInput, yInput, rect):
     if xInput and yInput:
@@ -65,7 +71,7 @@ def validateBtnInput(xInput, yInput, rect):
             return STATUS_INPUT_OUTOF_RANGE
     return STATUS_INVALIDINPUT
 
-def setFirstCoordinate(points):
+def setFirstCoordinate(hwnd, points):
     global xCoord
     global yCoord
     point = points[0]
@@ -73,6 +79,36 @@ def setFirstCoordinate(points):
     yCoord = point.getY()
     UI.SetWindowText(hWndInputX, str(xCoord))
     UI.SetWindowText(hWndInputY, str(yCoord))
+    redrawWindow(hwnd)
+
+def coordinatesCorrect(xInput, yInput):
+    global pairsDone
+    point = coords[pairsDone]
+    pairsDone += 1
+    if point.getX() == xInput and point.getY() == yInput:
+        return True
+    return False
+
+def resetGame(hwnd):
+    UI.SetWindowText(hWndCryptoOutput, "Encrypted Coordinates: \n")
+    initProgram(hwnd)
+    setEncryptedMsg()
+
+def incorrectAnswer(hwnd):
+    UI.MessageBox(hwnd, "Wrong coordinates.", "Wrong!", con.MB_OK | con.MB_ICONEXCLAMATION)
+    resetGame(hwnd)
+
+def won(hwnd):
+    UI.MessageBox(hwnd, "You reached the end!", "Victory!", con.MB_OK | con.MB_ICONINFORMATION)
+    resetGame(hwnd)
+
+def onCommand(hwnd, uMsg, wParam, lParam):
+    # hWord = UI.HIWORD(wParam)
+    lWord = UI.LOWORD(wParam)
+    if lWord == ID_COORDBTN:
+        processMovBtnClick(hWnd)
+
+    return 0
 
 # ########################################
 # ########################################
@@ -95,25 +131,28 @@ def createWindowComponents(hwnd):
     global hWndCryptoOutput
     global inputGroup
     groupYOffset = 20
-    xInC = 10
+    xInC = 20
     hInstance = UI.GetWindowLong(hwnd, con.GWL_HINSTANCE)
-    hWndInputX = win.createInputBox(0, 500, 100, 20, ID_XCINPUT, hwnd, hInstance)
-    hWndInputY = win.createInputBox(120, 500, 100, 20, ID_YCINPUT, hwnd, hInstance)
-    hWndCoordBtn = win.createButton("Move", 240, 500, 100, 22, ID_COORDBTN, hwnd, hInstance)
+    hWndInputX = win.createInputBox(xInC, 500, 100, 20, ID_XCINPUT, hwnd, hInstance)
+    hWndInputY = win.createInputBox(xInC + 120, 500, 100, 20, ID_YCINPUT, hwnd, hInstance)
+    hWndCoordBtn = win.createButton("Move", xInC + 240, 500, 100, 22, ID_COORDBTN, hwnd, hInstance)
     hWndCryptoOutput = win.createOutputBox(650, 10, 325, 515, 0, hwnd, hInstance)
     inputGroup = GW.GroupedWindows(hwnd, 10, 480, 360, 50)
+    # inputGroup.setCommandHandler(onCommand)
     inputGroup.setTitleText("Input")
-    inputGroup.addChild(hWndInputX, xInC, groupYOffset)
-    inputGroup.addChild(hWndInputY, xInC + 120, groupYOffset)
-    inputGroup.addChild(hWndCoordBtn, xInC + 240, groupYOffset)
-    inputGroup.setBrush(0x00ffffff)
+    # inputGroup.addChild(hWndInputX, xInC, groupYOffset)
+    # inputGroup.addChild(hWndInputY, xInC + 120, groupYOffset)
+    # inputGroup.addChild(hWndCoordBtn, xInC + 240, groupYOffset)
+    # inputGroup.setBrush(0x00ffffff)
 
 def initWindow(hwnd):
+    global hWnd
     initGDI(hwnd)
     createWindowComponents(hwnd)
     UI.SetWindowText(hWndCryptoOutput, "Encrypted Coordinates: \n")
     UI.SendMessage(hwnd, con.WM_SETFONT, hFont, False)
     UI.SetWindowPos(hwnd, 0, 0, 0, 1000, 575, con.SWP_NOMOVE | con.SWP_NOZORDER)
+    # hWnd = hwnd
 
 def initProgram(hwnd):
     global coords
@@ -122,16 +161,15 @@ def initProgram(hwnd):
     dim = win.getBmpDimensions(hBmp)        # [width, height]
     rect = (BMP_XCOORD, BMP_YCOORD, dim[0], dim[1])
     coords = cpt.generateCoords(rect, 4)
-    setFirstCoordinate(coords)
+    setFirstCoordinate(hwnd, coords)
     strCoords = cpt.pointsToStr(coords)
-    encrypted = cpt.encryptWords(strCoords)
+    encrypted = cpt.encryptWords(strCoords, True)
     encryptedMsg = cpt.strArrToString(encrypted)
 
 def setEncryptedMsg():
     wndText = UI.GetWindowText(hWndCryptoOutput)
     wndText += encryptedMsg
     UI.SetWindowText(hWndCryptoOutput, wndText)
-
 
 def cleanUp():
     UI.DestroyWindow(hWndInputX)
@@ -169,8 +207,12 @@ def processMovBtnClick(hwnd):
     if status == STATUS_OK:
         xCoord = int(xCStr)
         yCoord = int(yCStr)
-        rect = UI.GetClientRect(hwnd)
-        UI.RedrawWindow(hwnd, rect, 0, con.RDW_INVALIDATE | con.RDW_INTERNALPAINT)
+        redrawWindow(hwnd)
+        if coordinatesCorrect(xCoord, yCoord):
+            if pairsDone == 4:
+                won(hwnd)
+        else:
+            incorrectAnswer(hwnd)
     elif status == STATUS_INPUT_OUTOF_RANGE:
         UI.MessageBox(hwnd, "The specified coordinates are out of range.", "Error", con.MB_OK | con.MB_ICONEXCLAMATION)
     else:
@@ -235,8 +277,9 @@ def wndProc(hwnd, uMsg, wParam, lParam):
         return 0
 
     elif uMsg == con.WM_COMMAND:
-
-        if UI.LOWORD(wParam) == ID_COORDBTN:
+        hWord = UI.HIWORD(wParam)
+        lWord = UI.LOWORD(wParam)
+        if lWord == ID_COORDBTN:
             processMovBtnClick(hwnd)
 
         return 0

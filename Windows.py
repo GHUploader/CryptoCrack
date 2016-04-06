@@ -4,7 +4,7 @@ import win32gui as UI
 import win32 as WIN
 import win32con as con
 import win32file as WF
-import win32ui as U
+#import win32ui as U
 import win32com as COM
 import winerror
 from ctypes import *
@@ -111,6 +111,7 @@ class WNDClass:
         self.dwStyle = con.WS_OVERLAPPEDWINDOW
 
         self.wndClass = UI.WNDCLASS()
+        self.wndClass.cbWndExtra = 12
         self.wndClass.style = con.CS_VREDRAW | con.CS_HREDRAW
         self.wndClass.hInstance = self.hInstance
         self.wndClass.lpfnWndProc = wndProc
