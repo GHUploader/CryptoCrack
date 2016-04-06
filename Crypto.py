@@ -7,6 +7,7 @@ import random
 :param rect - Standard win32 RECT structure: (left, top, right, bottom)
 :param secCount - Number of sections to split up the field in. This value will equal to the number of points generated,
     and will also determine the density of the points.
+:returns - An array containing all of the point objects with valid, random coordinates/
 '''
 
 def generateCoords(rect, secCount):
@@ -27,6 +28,9 @@ def generateCoords(rect, secCount):
 
 '''
 Description - Converts an array of points to an array of strings.
+
+:points - Array of point objects.
+:returns - A string made up of the X and Y coordinate pairs contained by the different point objects in the array.
 '''
 
 def pointsToStr(points):
@@ -94,9 +98,24 @@ def encryptStr(word, offset):
 
     return encrypted
 
+'''
+Description - Encrypts the given string.
+
+:param word - string to encrypt
+:returns - encrypted string
+'''
+
 def encryptWord(word):
     offset = random.randint(1, 20)
     return encryptStr(word, offset)
+
+'''
+Description - Encrypts the specified array of words, and adds spaces between the words in the array if it is specified.
+
+:strArr - Array of strings.
+:space - Defaults to False. Read the next parameter description for details.
+:returns - A string containing the encrypted words from the array. Spaces are added if space = True
+'''
 
 def encryptWords(strArr, space=False):
     ret = []
